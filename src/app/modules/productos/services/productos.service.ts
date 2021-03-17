@@ -3,6 +3,7 @@ import { environment } from './../../../../environments/environment.prod';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class ProductosService {
   constructor(private http: HttpClient) { }
 
   get$(id) {
-    return this.http.get<any>( this.url + `/${id}`, this.httpOptions)
+
+    return id == null ? of(new Producto) : this.http.get<any>( this.url + `/${id}`, this.httpOptions)
       .pipe(map(resp => resp.data))
       .pipe(map(resp => resp === null ? [] : resp));
   }

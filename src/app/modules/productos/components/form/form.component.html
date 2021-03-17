@@ -27,19 +27,66 @@
         </ion-input>
 
         <ion-item>
-          <ion-label position="floating">Nombre</ion-label>
+          <ion-label position="floating">Articulo</ion-label>
           <ion-input  type="text"
-                      formControlName="nombre">
+                      formControlName="articulo">
           </ion-input>
           <ion-note>solo caracters alfanumericos, puntos y espacios</ion-note>
         </ion-item>
 
         <ion-item>
-          <ion-label position="floating">Valor</ion-label>
+          <ion-label position="floating">Referencia</ion-label>
           <ion-input  type="text"
-                      formControlName="valor">
+                      formControlName="referencia">
+          </ion-input>
+          <ion-note>prefijo REF + numeros y mayusculas</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Localizacion</ion-label>
+          <ion-input  type="text"
+                      formControlName="localizacion">
+          </ion-input>
+          <ion-note>solo caracters alfanumericos, puntos y espacios</ion-note>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label position="stacked">Tipo de Unidad</ion-label>
+
+          <ion-select placeholder="Escoja una opcion" formControlName="tipo_unidad">
+            <ion-select-option value="Unidad" > Unidad </ion-select-option>
+            <ion-select-option value="KiloGramos" > KiloGramos </ion-select-option>
+            <ion-select-option value="Docena" > Docena </ion-select-option>
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Minimo</ion-label>
+          <ion-input  type="text"
+                      formControlName="minimo">
           </ion-input>
           <ion-note>solo numeros</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Maximo</ion-label>
+          <ion-input  type="text"
+                      formControlName="maximo">
+          </ion-input>
+          <ion-note>solo numeros</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Proveedor</ion-label>
+
+          <ion-select placeholder="Escoja una opcion" formControlName="id_proveedor">
+            <ion-select-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
+              {{ proveedor.nombre }}
+            </ion-select-option>
+          </ion-select>
+
         </ion-item>
 
         <br><br>
