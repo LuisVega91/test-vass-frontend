@@ -1,0 +1,7 @@
+{
+  "name": "test-vass-frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
