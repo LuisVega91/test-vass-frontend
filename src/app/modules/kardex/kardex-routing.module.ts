@@ -1,5 +1,5 @@
-import { FormComponent } from './components/form/form.component';
-import { ListComponent } from './components/list/list.component';
+import { FormComponent } from './../kardex/components/form/form.component';
+import { ListComponent } from './../kardex/components/list/list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -27,4 +27,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class InventariosRoutingModule { }
+export class KardexRoutingModule { }

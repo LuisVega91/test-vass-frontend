@@ -1,0 +1,138 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-menu-button color="primary" menu="first"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>
+      Kardex
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="ionViewWillEnter($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Kardex</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid fixed>
+
+
+    <ng-container *ngIf=" kardex$ | async as kardex; else loading">
+      <ion-list #listadoKardex>
+
+
+        <ion-item>
+          <ion-label class="ion-text-left" position="stacked">Producto</ion-label>
+
+          <ion-select placeholder="Escoja una opcion" [(ngModel)]="id_producto" (ionChange)="ionViewWillEnter()">
+            <ion-select-option *ngFor="let producto of productos" [value]="producto.id">
+              {{ producto.articulo }}
+            </ion-select-option>
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h1>Movimentos</h1>
+          </ion-label>
+        </ion-item>
+
+        <div *ngIf="!error && kardex.length > 0">
+
+
+          <ion-item>
+            <ion-label>Tipo</ion-label>
+            <ion-label>Valor</ion-label>
+            <ion-label>Cantidad</ion-label>
+          </ion-item>
+
+
+
+          <div *ngFor="let movimiento of kardex">
+
+            <ion-item-sliding>
+
+              <ion-item-options side="start">
+                <ion-item-option
+                  (click)="devolucion(movimiento.id, movimiento.entrada_cantidad, movimiento.descripcion)"
+                  [color]="movimiento.devuelto == '1' ? 'medium' : 'success'" [disabled]="movimiento.devuelto == '1'">
+                  <ion-icon name="arrow-undo" slot="icon-only"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+
+              <ion-item (click)="movimiento.mostrar = !movimiento.mostrar">
+
+                <ion-icon slot="start" [name]="movimiento.entrada_cantidad ? 'download' : 'share'" [color]="
+                  (movimiento.entrada_valor || movimiento.salida_valor) < 0
+                    ? 'danger'
+                    : movimiento.devuelto == '1'
+                      ? 'medium'
+                      : movimiento.entrada_cantidad
+                        ? 'primary'
+                        : 'success'">
+                </ion-icon>
+                <ion-label class="ion-text-left">
+                  {{ (movimiento.entrada_valor || movimiento.salida_valor) < 0 ? 'Devolucion' : '' }} {{
+                    movimiento.entrada_cantidad ? 'Compra' : 'Venta' }} </ion-label>
+                    <ion-label>{{ movimiento.entrada_valor || movimiento.salida_valor | currency | minusSignToParens}}
+                    </ion-label>
+                    <ion-label>{{ movimiento.entrada_cantidad || movimiento.salida_cantidad | minusSignToParens}}
+                    </ion-label>
+
+                    <ion-icon [name]="movimiento.mostrar ? 'chevron-down' : 'chevron-forward'" slot="end"></ion-icon>
+              </ion-item>
+
+
+            </ion-item-sliding>
+            <ion-card *ngIf="movimiento.mostrar" style="text-align: center;">
+              <ion-card-header>
+                <ion-card-title>{{ movimiento.descripcion }}</ion-card-title>
+                <ion-card-subtitle>Fecha: {{ movimiento.created_at }}</ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+
+                <ion-row><ion-col size="6" class="ion-text-right">valor_unitario</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.valor_unitario || '0' | currency | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">entrada_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.entrada_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">entrada_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.entrada_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">salida_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.salida_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">salida_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.salida_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">saldo_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.saldo_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
+                <ion-row><ion-col size="6" class="ion-text-right">saldo_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.saldo_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
+
+              </ion-card-content>
+
+
+            </ion-card>
+          </div>
+        </div>
+
+      </ion-list>
+
+      <app-empty *ngIf="kardex.length < 1"></app-empty>
+      <app-error *ngIf="error"></app-error>
+
+    </ng-container>
+
+
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
+
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="form()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -8,20 +8,16 @@ const routes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then( m => m.HomePageModule)
   },
   {
+    path: 'kardex',
+    loadChildren: () => import('./modules/kardex/kardex.module').then( m => m.KardexModule)
+  },
+  {
     path: 'productos',
     loadChildren: () => import('./modules/productos/productos.module').then( m => m.ProductosModule)
   },
   {
     path: 'proveedores',
     loadChildren: () => import('./modules/proveedores/proveedores.module').then( m => m.ProveedorModule)
-  },
-  {
-    path: 'inventarios',
-    loadChildren: () => import('./modules/inventarios/inventarios.module').then( m => m.InventariosModule)
-  },
-  {
-    path: 'pedidos',
-    loadChildren: () => import('./modules/pedidos/pedidos.module').then( m => m.PedidosModule)
   },
   {
     path: '',

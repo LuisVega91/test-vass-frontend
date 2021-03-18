@@ -9,7 +9,7 @@ export class AlertService {
   constructor(private alertController: AlertController) { }
 
   async mostrar(
-    aceptHandler?: () => void,
+    aceptHandler?: (data?: any) => void,
     cancelHandler?: () => void,
     titulo: string = !cancelHandler ? 'Exito' : 'Seguro que desea Realizar esta accion?',
     mensaje: string = !cancelHandler ? 'Operacion realizada con exito' : '',
@@ -17,6 +17,7 @@ export class AlertService {
     cancelText: string = 'Cancelar',
     backdropDismiss: boolean = false,
     subtitulo?: string,
+    inputs = [],
   ) {
 
     let buttons: any[] = [aceptText];
@@ -32,7 +33,8 @@ export class AlertService {
       subHeader: subtitulo,
       message: mensaje,
       buttons,
-      backdropDismiss
+      backdropDismiss,
+      inputs
     });
 
     await alert.present();

@@ -15,7 +15,6 @@ import { catchError } from 'rxjs/operators';
 export class ListComponent implements OnInit {
 
   @ViewChild('listadoProveedores') listadoProveedores: IonList;
-  @ViewChild('termino') terminoBusqueda: IonSearchbar;
 
   proveedores$: Observable<Proveedor[]>;
   error = null;
