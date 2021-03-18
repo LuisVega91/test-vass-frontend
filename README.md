@@ -1,7 +1,7 @@
 
 # instrucciones de despliegue
-<div style="text-align: center;">
-  <img src="./capturas/sliding.jpg" style="width: 50%;">
+<div style="text-align: center; padding-inline: 25%;">
+  <img src="./capturas/sliding.jpg" >
   <p>Nota: los items dentro de la listas llevan funciones ocultas, las misma se muestran con el gesto que se muestra en la imagen</p>
 </div>
 
