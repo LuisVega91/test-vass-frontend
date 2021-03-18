@@ -1,9 +1,14 @@
+## Nota:
+<table>
+  <tbody>
+    <tr>
+      <td> <img src="./capturas/sliding.jpg" ></td>
+      <td>Nota: los items dentro de la listas llevan funciones ocultas, las misma se muestran con el gesto que se muestra en la imagen</td>
+    </tr>
+  </tbody>
+</table>
 
 # instrucciones de despliegue
-<div style="text-align: center; padding-inline: 25%;">
-  <img src="./capturas/sliding.jpg" >
-  <p>Nota: los items dentro de la listas llevan funciones ocultas, las misma se muestran con el gesto que se muestra en la imagen</p>
-</div>
 
 ##### Requisitos previos:
  > haber desplegado el backend
