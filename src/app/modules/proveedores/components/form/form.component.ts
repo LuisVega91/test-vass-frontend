@@ -46,7 +46,7 @@ export class FormComponent implements OnInit {
   crearFormulario() {
     this.formulario = this.fb.group({
       id: [this.proveedor.id, Validators.required],
-      nombre: [this.proveedor.nombre, [Validators.pattern(/^[0-9a-zA-Z\.\s]*$/), Validators.required, Validators.maxLength(50)]],
+      nombre: [this.proveedor.nombre, [Validators.pattern(/^[0-9a-zA-Z\.\s\-\']*$/), Validators.required, Validators.maxLength(50)]],
     });
     this.cargaCompleta = true;
   }

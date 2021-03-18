@@ -43,7 +43,7 @@ export class KardexService {
     return this.http.put<any>(this.url + '/compra', kardex, this.httpOptions)
   }
   venta$(kardex: object) {
-    return this.http.put<any>(this.url + '/venta', kardex, this.httpOptions)
+    return this.http.post<any>(this.url + '/venta', kardex, this.httpOptions)
   }
   devolucionVenta$(kardex: object) {
     return this.http.put<any>(this.url + '/venta', kardex, this.httpOptions)

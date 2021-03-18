@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Kardex } from './../../models/Kardex';
 import { AlertService } from './../../../../shared/services/alert.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { KardexService } from './../../services/kardex.service';
 import { IonList } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
 
   constructor(
     private kardexService: KardexService,
+    private route: ActivatedRoute,
     private productosService: ProductosService,
     private router: Router,
     private alertService: AlertService,
@@ -61,13 +62,17 @@ export class ListComponent implements OnInit {
     );
   }
 
-  form(id?: string | number) {
+  form(tipo, id?: string | number) {
     this.listadoKardex.closeSlidingItems();
     id = id ? '/' + id : '';
-    this.router.navigateByUrl('kardex/form' + id);
+    this.router.navigateByUrl('kardex/form/'+ tipo + id);
   }
 
   ionViewWillEnter(event?: any) {
+    const id = this.route.snapshot.paramMap.get('id_producto');
+    if(id){
+      this.id_producto = Number(id);
+    }
     this.error = null;
     if (this.id_producto) {
       this.kardex$ = this.kardexService.getByIdProducto$(this.id_producto)
@@ -76,11 +81,10 @@ export class ListComponent implements OnInit {
       this.kardex$ = this.kardexService.getAll$()
         .pipe(catchError(err => this.error = err));
     }
-    if (this.productos.length == 0) {
-      this.productosService.getAll$()
-        .pipe(catchError(err => this.error = err))
-        .subscribe(r => this.productos = r);
-    }
+    this.productosService.getAll$()
+      .pipe(catchError(err => this.error = err))
+      .subscribe(r => this.productos = r);
+
     if (event) { event.target.complete(); }
   }
 

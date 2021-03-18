@@ -28,13 +28,13 @@ export class AlertService {
       buttons.push({text: cancelText , handler: cancelHandler });
     }
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
+      mode: "ios",
       header: titulo,
       subHeader: subtitulo,
       message: mensaje,
       buttons,
       backdropDismiss,
-      inputs
+      inputs,
     });
 
     await alert.present();

@@ -1,4 +1,4 @@
 <div id="centerxy">
-  <ion-icon name="file-tray" size="large" color="medium"></ion-icon>
-  <p>no hay resultados para mostrar</p>
+  <ion-icon [name]="icon || 'file-tray'" size="large" color="medium"></ion-icon>
+  <p>{{ mensaje || 'no hay resultados para mostrar' }}</p>
 </div>

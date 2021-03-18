@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-empty',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./empty.component.scss'],
 })
 export class EmptyComponent implements OnInit {
+
+  @Input() mensaje;
+  @Input() icon;
 
   constructor() { }
 

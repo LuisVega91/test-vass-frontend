@@ -9,11 +9,15 @@ const routes: Routes = [
     component: ListComponent
   },
   {
-    path: 'form',
+    path: 'list/:id_producto',
+    component: ListComponent
+  },
+  {
+    path: 'form/:tipo',
     component: FormComponent
   },
   {
-    path: 'form/:id',
+    path: 'form/:tipo/:id',
     component: FormComponent
   },
   {

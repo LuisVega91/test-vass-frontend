@@ -32,14 +32,20 @@
 
         <ion-item>
           <ion-label class="ion-text-left" position="stacked">Producto</ion-label>
-
-          <ion-select placeholder="Escoja una opcion" [(ngModel)]="id_producto" (ionChange)="ionViewWillEnter()">
+          <ion-select placeholder="Escoja una opcion" [(ngModel)]="id_producto" (ionChange)="ionViewWillEnter()"
+            mode="ios">
             <ion-select-option *ngFor="let producto of productos" [value]="producto.id">
               {{ producto.articulo }}
             </ion-select-option>
           </ion-select>
-
         </ion-item>
+
+        <ion-item *ngIf="!error && id_producto">
+          <ion-label>$ Total <ion-note>{{ kardex[0]?.valor_unitario || '0' | currency | minusSignToParens}}</ion-note></ion-label>
+          <ion-label>$ Unidad <ion-note>{{ kardex[0]?.saldo_valor || '0' | currency | minusSignToParens}}</ion-note></ion-label>
+          <ion-label>Cantidad <ion-note>{{ kardex[0]?.saldo_cantidad || '0' | minusSignToParens}}</ion-note></ion-label>
+        </ion-item>
+
 
         <ion-item>
           <ion-label>
@@ -102,13 +108,41 @@
 
               <ion-card-content>
 
-                <ion-row><ion-col size="6" class="ion-text-right">valor_unitario</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.valor_unitario || '0' | currency | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">entrada_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.entrada_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">entrada_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.entrada_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">salida_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.salida_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">salida_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.salida_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">saldo_cantidad</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.saldo_cantidad || '0' | minusSignToParens}}</ion-col></ion-row>
-                <ion-row><ion-col size="6" class="ion-text-right">saldo_valor</ion-col><ion-col size="6" class="ion-text-left">{{ movimiento.saldo_valor || '0' | currency | minusSignToParens}}</ion-col></ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">valor_unitario</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.valor_unitario || '0' | currency |
+                    minusSignToParens}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">entrada_cantidad</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.entrada_cantidad || '0' | minusSignToParens}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">entrada_valor</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.entrada_valor || '0' | currency |
+                    minusSignToParens}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">salida_cantidad</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.salida_cantidad || '0' | minusSignToParens}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">salida_valor</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.salida_valor || '0' | currency |
+                    minusSignToParens}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">saldo_cantidad</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.saldo_cantidad || '0' | minusSignToParens}}
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="6" class="ion-text-right">saldo_valor</ion-col>
+                  <ion-col size="6" class="ion-text-left">{{ movimiento.saldo_valor || '0' | currency |
+                    minusSignToParens}}</ion-col>
+                </ion-row>
 
               </ion-card-content>
 
@@ -119,7 +153,10 @@
 
       </ion-list>
 
-      <app-empty *ngIf="kardex.length < 1"></app-empty>
+      <app-empty *ngIf="kardex.length < 1"
+        [mensaje]="id_producto ? 'No existen movimientos par este producto' : 'Seleccione Un Producto' "
+        [icon]="id_producto ? '' : 'arrow-up'">
+      </app-empty>
       <app-error *ngIf="error"></app-error>
 
     </ng-container>
@@ -130,9 +167,22 @@
     </ng-template>
 
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="form()">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="id_producto">
+    <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-note>Vender</ion-note>
+      <ion-fab-button (click)="form('venta',id_producto)">
+        <ion-icon name="share" color="success"></ion-icon>
+      </ion-fab-button>
+      <ion-note>Comprar</ion-note>
+      <ion-fab-button (click)="form('compra',id_producto)">
+        <ion-icon name="download" color="primary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>
+<ion-footer>
+
+</ion-footer>

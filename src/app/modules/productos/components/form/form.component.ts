@@ -30,9 +30,11 @@ export class FormComponent implements OnInit {
     private proveedoresService: ProveedoresService,
     private fb: FormBuilder,
     private alertService: AlertService) {
-    this.getDataForm();
   }
 
+  ionViewWillEnter() {
+    this.getDataForm();
+  }
 
   getDataForm() {
     const id = this.route.snapshot.paramMap.get('id');
@@ -51,13 +53,13 @@ export class FormComponent implements OnInit {
   crearFormulario() {
     this.formulario = this.fb.group({
       id: [this.producto.id, Validators.required],
-      articulo: [this.producto.articulo, [Validators.pattern(/^[0-9a-zA-Z\.\s]*$/), Validators.required, Validators.maxLength(50)]],
+      articulo: [this.producto.articulo, [Validators.pattern(/^[0-9a-zA-Z\.\s\-]*$/), Validators.required, Validators.maxLength(50)]],
       referencia: [this.producto.referencia, [Validators.pattern(/^REF[0-9A-Z]+$/), Validators.required, Validators.maxLength(50)]],
       localizacion: [this.producto.localizacion, [Validators.pattern(/^[0-9a-zA-Z\.\s]*$/), Validators.required, Validators.maxLength(50)]],
       tipo_unidad: [this.producto.tipo_unidad, [Validators.pattern(/^[0-9a-zA-Z\.\s]*$/), Validators.required, Validators.maxLength(50)]],
       minimo: [this.producto.minimo, [Validators.pattern(/^[0-9]*$/), Validators.required, Validators.maxLength(50)]],
       maximo: [this.producto.maximo, [Validators.pattern(/^[0-9]*$/), Validators.required, Validators.maxLength(50)]],
-      id_proveedor: [Number(this.producto.id_proveedor), [ Validators.required, Validators.maxLength(50)]],
+      id_proveedor: [Number(this.producto.id_proveedor), [Validators.required, Validators.maxLength(50)]],
     });
     this.cargaCompleta = true;
   }

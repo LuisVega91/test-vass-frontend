@@ -54,7 +54,7 @@
         <ion-item>
           <ion-label position="stacked">Tipo de Unidad</ion-label>
 
-          <ion-select placeholder="Escoja una opcion" formControlName="tipo_unidad">
+          <ion-select placeholder="Escoja una opcion" formControlName="tipo_unidad" mode="ios">
             <ion-select-option value="Unidad" > Unidad </ion-select-option>
             <ion-select-option value="KiloGramos" > KiloGramos </ion-select-option>
             <ion-select-option value="Docena" > Docena </ion-select-option>
@@ -81,7 +81,7 @@
         <ion-item>
           <ion-label position="stacked">Proveedor</ion-label>
 
-          <ion-select placeholder="Escoja una opcion" formControlName="id_proveedor">
+          <ion-select placeholder="Escoja una opcion" formControlName="id_proveedor" mode="ios">
             <ion-select-option *ngFor="let proveedor of proveedores" [value]="proveedor.id">
               {{ proveedor.nombre }}
             </ion-select-option>

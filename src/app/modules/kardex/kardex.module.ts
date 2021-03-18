@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 
 import { KardexRoutingModule } from './kardex-routing.module';
 import { MinusSignToParensPipe } from 'src/app/shared/pipes/minus-sign-to-parens.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MinusSignToParensPipe } from 'src/app/shared/pipes/minus-sign-to-parens
     KardexRoutingModule,
     IonicModule,
     MensajesModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class KardexModule { }
